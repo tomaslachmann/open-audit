@@ -1,16 +1,14 @@
-import { Pool } from "pg";
+import type { Pool } from "pg";
 import { AuditEvent } from "./types";
 import { BaseAdapter } from "./base";
 
 export class PostgresAdapter extends BaseAdapter {
-  private pool: Pool;
-
   constructor(
-    private url: string,
+    private pool: Pool,
     debug = false,
   ) {
     super(debug);
-    this.pool = new Pool({ connectionString: url });
+    this.pool = pool;
   }
 
   async init() {

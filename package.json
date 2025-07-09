@@ -1,6 +1,6 @@
 {
   "name": "@arcari/open-audit",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "> A lightweight, pluggable audit log library for Node.js — log user actions to Postgres, MySQL, MongoDB, SQLite, or files.",
   "keywords": [],
   "homepage": "https://github.com/tomaslachmann/open-audit#readme",
@@ -27,14 +27,12 @@
     "test": "vitest --disable-console-intercept"
   },
   "dependencies": {
-    "better-sqlite3": "^12.2.0",
     "chalk": "^5.4.1",
-    "mongodb": "^6.17.0",
-    "mysql2": "^3.14.1",
-    "pg": "^8.16.3"
+    "mongodb": "^6.17.0"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",
+    "@types/mysql2": "github:types/mysql2",
     "@types/node": "^24.0.12",
     "@types/pg": "^8.15.4",
     "ts-node-dev": "^2.0.0",

@@ -1,16 +1,14 @@
-import mysql from "mysql2/promise";
+import type { Pool } from "mysql2/promise";
 import { AuditEvent } from "./types";
 import { BaseAdapter } from "./base";
 
 export class MySQLAdapter extends BaseAdapter {
-  private pool: mysql.Pool;
-
   constructor(
-    private url: string,
+    private pool: Pool,
     debug = false,
   ) {
     super(debug);
-    this.pool = mysql.createPool(url);
+    this.pool = pool;
   }
 
   async init() {

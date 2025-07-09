@@ -1,21 +1,19 @@
-import Database from "better-sqlite3";
+import type { Database } from "better-sqlite3";
 import { BaseAdapter } from "./base";
 import { AuditEvent } from "./types";
 
 export class SQLiteAdapter extends BaseAdapter {
-  private db: Database.Database;
-
   constructor(
-    private path: string = "./audit.sqlite",
+    private db: Database,
     debug = false,
   ) {
     super(debug);
-    this.db = new Database(this.path);
+    this.db = db;
   }
 
   async init() {
     try {
-      this.logger.info(`Connecting to SQLite at ${this.path}...`);
+      this.logger.info(`Connecting to SQLite...`);
       this.db.pragma("journal_mode = WAL");
       this.db.exec(`
         CREATE TABLE IF NOT EXISTS audit_events (

@@ -20,20 +20,20 @@ export const OpenAudit = {
   async init(config: AuditInitConfig) {
     switch (config.provider) {
       case "postgresql":
-        adapter = new PostgresAdapter(config.url, config.debug);
+        adapter = new PostgresAdapter(config.pool, config.debug);
         break;
       case "mysql":
-        adapter = new MySQLAdapter(config.url, config.debug);
+        adapter = new MySQLAdapter(config.pool, config.debug);
         break;
       case "file":
         adapter = new FileAdapter(config.path, config.debug);
         break;
       case "sqlite":
-        adapter = new SQLiteAdapter(config.path, config.debug);
+        adapter = new SQLiteAdapter(config.db, config.debug);
         break;
       case "mongodb":
         adapter = new MongoDBAdapter(
-          config.url,
+          config.client,
           config.dbName,
           config.collectionName,
           config.debug,

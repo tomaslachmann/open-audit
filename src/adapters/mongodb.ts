@@ -1,20 +1,19 @@
-import { MongoClient, Db, Collection } from "mongodb";
+import type { MongoClient, Db, Collection } from "mongodb";
 import { BaseAdapter } from "./base";
 import { AuditEvent } from "./types";
 
 export class MongoDBAdapter extends BaseAdapter {
-  private client: MongoClient;
-  private db!: Db;
   private collection!: Collection;
+  private db!: Db;
 
   constructor(
-    private url: string,
+    private client: MongoClient,
     private dbName: string = "audit",
     private collectionName: string = "audit_events",
     debug = false,
   ) {
     super(debug);
-    this.client = new MongoClient(url);
+    this.client = client;
   }
 
   async init() {
