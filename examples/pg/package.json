@@ -1,0 +1,21 @@
+{
+  "name": "pg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "scripts": {
+    "dev": "ts-node-dev --respawn index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "pg": "^8.16.3"
+  }
+}
