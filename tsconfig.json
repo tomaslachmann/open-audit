@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2020",             // modern JS target
-    "module": "CommonJS",           // Node.js module system
+    "module": "ESNext",             // Node.js module system
+    "moduleResolution": "Node",
     "outDir": "./dist",             // compiled JS output folder
     "rootDir": "./src",             // your TS source code folder
     "strict": true,                 // enable all strict type checks
     "esModuleInterop": true,        // import compatibility
-    "skipLibCheck": true            // skip type checks on libs
-  }
+    "skipLibCheck": true,            // skip type checks on libs
+    "declaration": true
+  },
+  "include": [ "src" ]
 }

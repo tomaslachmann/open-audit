@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "author": "Tomas Lachmann",
-  "type": "commonjs",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "directories": {
