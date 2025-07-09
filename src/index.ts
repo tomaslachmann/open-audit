@@ -8,6 +8,14 @@ import { MongoDBAdapter } from "./adapters/mongodb";
 
 let adapter: BaseAdapter | null = null;
 
+function checkAdapter(adapter: BaseAdapter | null) {
+  if (adapter === null) {
+    throw new Error(
+      "[OpenAudit] Not initialized. Call OpenAudit.init(...) first.",
+    );
+  }
+}
+
 export const OpenAudit = {
   async init(config: AuditInitConfig) {
     switch (config.provider) {
@@ -41,11 +49,32 @@ export const OpenAudit = {
   },
 
   async log(event: AuditEvent) {
-    if (!adapter) {
-      throw new Error(
-        "[OpenAudit] Not initialized. Call OpenAudit.init(...) first.",
-      );
-    }
+    checkAdapter(adapter);
+    // @ts-expect-error dn
     return await adapter.logEvent(event);
+  },
+
+  info(...args: any[]) {
+    checkAdapter(adapter);
+    // @ts-expect-error dn
+    return adapter.logger.info(JSON.stringify(args));
+  },
+
+  error(...args: any[]) {
+    checkAdapter(adapter);
+    // @ts-expect-error dn
+    return adapter.logger.error(JSON.stringify(args));
+  },
+
+  success(...args: any[]) {
+    checkAdapter(adapter);
+    // @ts-expect-error dn
+    return adapter.logger.success(JSON.stringify(args));
+  },
+
+  debug(...args: any[]) {
+    checkAdapter(adapter);
+    // @ts-expect-error dn
+    return adapter.logger.debug(JSON.stringify(args));
   },
 };

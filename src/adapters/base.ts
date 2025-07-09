@@ -2,7 +2,7 @@ import { Logger } from "../utils/logger";
 import { AuditEvent } from "./types";
 
 export abstract class BaseAdapter {
-  protected logger: Logger;
+  public logger: Logger;
 
   constructor(protected debug = false) {
     this.logger = new Logger(debug);
