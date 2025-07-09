@@ -25,4 +25,3 @@ export const OpenAudit = {
     return await adapter.logEvent(event);
   },
 };
-p;
