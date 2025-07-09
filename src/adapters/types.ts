@@ -1,10 +1,15 @@
-export type Provider = "postgresql";
+export type Provider = "postgresql" | "file" | "mysql" | "sqlite" | "mongodb";
 
-export type AuditInitConfig = {
-  provider: Provider;
-  url: string;
-  debug?: boolean;
-};
+export type AuditInitConfig =
+  | { provider: "postgresql" | "mysql"; url: string; debug?: boolean }
+  | { provider: "file" | "sqlite"; path?: string; debug?: boolean }
+  | {
+      provider: "mongodb";
+      url: string;
+      dbName?: string;
+      collectionName?: string;
+      debug?: boolean;
+    };
 
 export type AuditEvent = {
   actorId?: string;
