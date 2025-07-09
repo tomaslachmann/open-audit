@@ -19,15 +19,15 @@ export class MongoDBAdapter extends BaseAdapter {
 
   async init() {
     try {
-      this.log.info("Connecting to MongoDB...");
+      this.logger.info("Connecting to MongoDB...");
       await this.client.connect();
       this.db = this.client.db(this.dbName);
       this.collection = this.db.collection(this.collectionName);
-      this.log.success(
+      this.logger.success(
         `Connected to MongoDB and using ${this.dbName}.${this.collectionName}`,
       );
     } catch (err) {
-      this.log.error("Failed to initialize MongoDB adapter.");
+      this.logger.error("Failed to initialize MongoDB adapter.");
       console.error(err);
       throw err;
     }
@@ -39,7 +39,7 @@ export class MongoDBAdapter extends BaseAdapter {
       timestamp: new Date(),
     });
 
-    this.log.debug("Logged event:", result);
+    this.log("Logged event:", result);
     return result;
   }
 }

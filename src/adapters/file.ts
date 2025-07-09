@@ -14,11 +14,11 @@ export class FileAdapter extends BaseAdapter {
   async init(): Promise<void> {
     try {
       await fs.mkdir(this.baseDir, { recursive: true });
-      this.log.success(
+      this.logger.success(
         `Directory ${this.baseDir} is ready for file-based audit logs.`,
       );
     } catch (err) {
-      this.log.error("Failed to initialize FileAdapter.");
+      this.logger.error("Failed to initialize FileAdapter.");
       console.error(err);
       throw err;
     }
@@ -47,7 +47,7 @@ export class FileAdapter extends BaseAdapter {
 
     await fs.writeFile(filePath, JSON.stringify(existing, null, 2), "utf-8");
 
-    this.log.debug(`Logged event to file: ${filePath}`);
+    this.log(`Logged event to file: ${filePath}`);
     return fullEvent;
   }
 }

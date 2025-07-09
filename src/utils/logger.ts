@@ -3,10 +3,10 @@ import chalk from "chalk";
 const prefix = chalk.bold.cyan("[OpenAudit]");
 
 const label = {
-  info: chalk.bgBlue.white.bold(" INFO "),
-  success: chalk.bgGreen.white.bold(" SUCCESS "),
-  error: chalk.bgRed.white.bold(" ERROR "),
-  debug: chalk.bgGray.white.bold(" DEBUG "),
+  info: chalk.bgBlue.whiteBright.bold(" INFO "),
+  success: chalk.bgGreen.whiteBright.bold(" SUCCESS "),
+  error: chalk.bgRed.whiteBright.bold(" ERROR "),
+  debug: chalk.bgGray.whiteBright.bold(" DEBUG "),
 };
 
 const icon = {
@@ -43,7 +43,7 @@ export class Logger {
   debug(...args: any[]) {
     if (!this.enabled) return;
     console.log(
-      `${prefix}  ${label.debug}  ${chalk.gray(icon.debug)} ${chalk.gray(...args)}`,
+      `${prefix}  ${label.debug}  ${chalk.gray(icon.debug)} ${chalk.whiteBright(...args)}`,
     );
   }
 }

@@ -15,12 +15,12 @@ export class MySQLAdapter extends BaseAdapter {
 
   async init() {
     try {
-      this.log.info("Connecting to MySQL-compatible database...");
+      this.logger.info("Connecting to MySQL-compatible database...");
 
       // Step 1: Test connection
       const conn = await this.pool.getConnection();
       conn.release();
-      this.log.success("Connected to MySQL-compatible database.");
+      this.logger.success("Connected to MySQL-compatible database.");
 
       // Step 2: Ensure table exists
       await this.pool.query(`
@@ -35,9 +35,9 @@ export class MySQLAdapter extends BaseAdapter {
         )
       `);
 
-      this.log.success("audit_events table is ready.");
+      this.logger.success("audit_events table is ready.");
     } catch (err) {
-      this.log.error("Failed to initialize MySQL adapter.");
+      this.logger.error("Failed to initialize MySQL adapter.");
       console.error(err);
       throw err;
     }
@@ -52,7 +52,7 @@ export class MySQLAdapter extends BaseAdapter {
       [actorId, action, entity, entityId, JSON.stringify(metadata || {})],
     );
 
-    this.log.debug("Logged event:", result);
+    this.log("Logged event:", result);
     return result;
   }
 }

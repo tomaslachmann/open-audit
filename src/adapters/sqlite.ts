@@ -15,7 +15,7 @@ export class SQLiteAdapter extends BaseAdapter {
 
   async init() {
     try {
-      this.log.info(`Connecting to SQLite at ${this.path}...`);
+      this.logger.info(`Connecting to SQLite at ${this.path}...`);
       this.db.pragma("journal_mode = WAL");
       this.db.exec(`
         CREATE TABLE IF NOT EXISTS audit_events (
@@ -28,9 +28,11 @@ export class SQLiteAdapter extends BaseAdapter {
           metadata TEXT
         );
       `);
-      this.log.success("Connected to SQLite and ensured audit_events table.");
+      this.logger.success(
+        "Connected to SQLite and ensured audit_events table.",
+      );
     } catch (err) {
-      this.log.error("Failed to initialize SQLite adapter.");
+      this.logger.error("Failed to initialize SQLite adapter.");
       console.error(err);
       throw err;
     }
@@ -49,7 +51,7 @@ export class SQLiteAdapter extends BaseAdapter {
       JSON.stringify(event.metadata || {}),
     );
 
-    this.log.debug("Logged event:", info);
+    this.log("Logged event:", info);
     return info;
   }
 }

@@ -15,12 +15,12 @@ export class PostgresAdapter extends BaseAdapter {
 
   async init() {
     try {
-      this.log.info("Connecting to PostgreSQL...");
+      this.logger.info("Connecting to PostgreSQL...");
 
       // Step 1: Test connection
       const client = await this.pool.connect();
       client.release();
-      this.log.success("Connected to PostgreSQL.");
+      this.logger.success("Connected to PostgreSQL.");
       // Step 2: Ensure table exists
       await this.pool.query(`
         CREATE TABLE IF NOT EXISTS audit_events (
@@ -33,9 +33,9 @@ export class PostgresAdapter extends BaseAdapter {
           metadata JSONB
         );
       `);
-      this.log.success("audit_events table is ready.");
+      this.logger.success("audit_events table is ready.");
     } catch (err) {
-      this.log.error("Failed to initialize PostgreSQL adapter.");
+      this.logger.error("Failed to initialize PostgreSQL adapter.");
       console.error(err);
       throw err;
     }
@@ -48,7 +48,7 @@ export class PostgresAdapter extends BaseAdapter {
        VALUES ($1, $2, $3, $4, $5) RETURNING *`,
       [actorId, action, entity, entityId, metadata || {}],
     );
-    this.log.debug("Logged event:", result.rows[0]);
+    this.log("Logged event:", result.rows[0]);
 
     return result.rows[0];
   }
