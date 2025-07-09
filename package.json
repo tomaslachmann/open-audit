@@ -27,11 +27,11 @@
     "test": "vitest --disable-console-intercept"
   },
   "dependencies": {
-    "chalk": "^5.4.1",
-    "mongodb": "^6.17.0"
+    "chalk": "^5.4.1"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",
+    "@types/mongodb": "^4.0.6",
     "@types/mysql2": "github:types/mysql2",
     "@types/node": "^24.0.12",
     "@types/pg": "^8.15.4",
