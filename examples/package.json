@@ -11,7 +11,7 @@
     "custom-pg": "ts-node-esm adapters/custom-pg.ts"
   },
   "dependencies": {
-    "@arcari/open-audit": "^1.0.5",
+    "@arcari/open-audit": "^1.0.6",
     "mongodb": "^6",
     "mysql2": "^3",
     "pg": "^8"
