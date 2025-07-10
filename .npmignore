@@ -6,3 +6,5 @@ tsup.config.ts
 .gitignore
 .git
 .env
+vitest.config.ts
+README.md
