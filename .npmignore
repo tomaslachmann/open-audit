@@ -8,3 +8,4 @@ tsup.config.ts
 .env
 vitest.config.ts
 README.md
+.github
