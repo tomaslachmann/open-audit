@@ -1,0 +1,25 @@
+{
+  "name": "audit-example",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "pg": "ts-node-esm adapters/pg.ts",
+    "mysql": "ts-node-esm adapters/mysql2.ts",
+    "sqlite": "ts-node-esm adapters/sqlite.ts",
+    "mongo": "ts-node-esm adapters/mongodb.ts",
+    "file": "ts-node-esm adapters/file.ts",
+    "custom-pg": "ts-node-esm adapters/custom-pg.ts"
+  },
+  "dependencies": {
+    "@arcari/open-audit": "^1.0.5",
+    "mongodb": "^6",
+    "mysql2": "^3",
+    "pg": "^8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "dotenv": "^16",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.4.0"
+  }
+}
