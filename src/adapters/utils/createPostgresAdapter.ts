@@ -7,7 +7,7 @@ export class CreatePostgresAdapter
   implements AdapterInterface
 {
   constructor(
-    private connect: () => Promise<void>,
+    private connect: () => Promise<any>,
     private execute: (sql: string, values: any[]) => Promise<any>,
     debug = false,
   ) {

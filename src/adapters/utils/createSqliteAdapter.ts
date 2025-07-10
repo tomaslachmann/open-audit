@@ -5,7 +5,7 @@ export class CreateSqliteAdapter
   extends BaseAdapter
   implements AdapterInterface
 {
-  private connect: () => Promise<void>;
+  private connect: () => Promise<any>;
   private execute: (sql: string, params?: any[]) => Promise<any>;
 
   constructor(

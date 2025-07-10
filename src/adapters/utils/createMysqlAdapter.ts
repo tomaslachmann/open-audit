@@ -5,7 +5,7 @@ export class CreateMysqlAdapter
   extends BaseAdapter
   implements AdapterInterface
 {
-  private connect: () => Promise<void>;
+  private connect: () => Promise<any>;
   private execute: (sql: string, values: any[]) => Promise<any>;
 
   constructor(
