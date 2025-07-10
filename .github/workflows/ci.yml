@@ -68,7 +68,7 @@ jobs:
         run: npm run build
 
       - name: 🪄 Upload build artifact (optional)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: open-audit-dist
           path: dist/
