@@ -52,6 +52,7 @@ await OpenAudit.init({
   provider: "postgresql", // 'mysql' | 'mongodb' | 'sqlite' | 'file'
   url: "postgres://user:pass@localhost:5432/mydb",
   debug: true,
+  driver: "pg",
 });
 
 await OpenAudit.log({
@@ -68,33 +69,48 @@ await OpenAudit.log({
 
 ---
 
+## 📁 Examples
+
+Explore the [`examples`](./examples) folder in this repository to find practical usage examples demonstrating:
+
+- How to initialize and configure the library
+- Usage of all supported adapters (PostgreSQL, MySQL, SQLite, MongoDB, File, and custom)
+- Sample configurations and connection setups
+- Logging and audit event recording in action
+
+These examples serve as a hands-on guide to quickly get started with the library in your projects.
+
+---
+
 ## ⚙️ Configuration per Adapter
 
-### 🔹 PostgreSQL
+### 🔹 PostgreSQL and pg driver
 
 ```ts
 {
   provider: 'postgresql',
   url: 'postgres://user:pass@host:port/db',
-  debug?: boolean
+  debug?: boolean,
+  driver: "pg"
 }
 ```
 
 ---
 
-### 🔹 MySQL / MariaDB
+### 🔹 MySQL / MariaDB and mysql2 driver
 
 ```ts
 {
   provider: 'mysql',
   url: 'mysql://user:pass@host:port/db',
-  debug?: boolean
+  debug?: boolean,
+  driver: "mysql2"
 }
 ```
 
 ---
 
-### 🔹 MongoDB
+### 🔹 MongoDB and mongo driver
 
 ```ts
 {
@@ -102,19 +118,21 @@ await OpenAudit.log({
   url: 'mongodb://localhost:27017',
   dbName?: string,          // default: 'audit'
   collectionName?: string,  // default: 'audit_events'
-  debug?: boolean
+  debug?: boolean,
+  driver: "mongo"
 }
 ```
 
 ---
 
-### 🔹 SQLite
+### 🔹 SQLite and better-sqlite3 driver
 
 ```ts
 {
   provider: 'sqlite',
   path?: string,   // default: './audit.sqlite'
-  debug?: boolean
+  debug?: boolean,
+  driver: "better-sqlite3"
 }
 ```
 
@@ -203,10 +221,7 @@ Pull requests are welcome! For major changes, open an issue first to discuss wha
 To get started locally:
 
 ```bash
-git clone https://github.com/yourname/open-audit.git
-cd open-audit
-npm install
-npm run dev
+npm i @arcari/open-audit
 ```
 
 ---

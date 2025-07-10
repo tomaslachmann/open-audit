@@ -2,7 +2,6 @@ import type { Pool } from "pg";
 import type { Pool as MysqlPool } from "mysql2/promise";
 import type { Database } from "better-sqlite3";
 import type { MongoClient } from "mongodb";
-import { BaseAdapter } from "./base";
 import { CreateSqliteAdapter } from "./utils/createSqliteAdapter";
 import { CreatePostgresAdapter } from "./utils/createPostgresAdapter";
 import { CreateMysqlAdapter } from "./utils/createMysqlAdapter";
@@ -21,29 +20,21 @@ export interface AdapterInterface {
   init(): Promise<void>;
 }
 
-type CustomPostgresProvider = {
-  provider: "postgresql";
-  adapter: CreatePostgresAdapter;
+// Generic type for custom provider adapters
+type CustomProvider<P extends Provider, A extends AdapterInterface> = {
+  provider: P;
+  adapter: A;
   driver: "custom";
 };
 
-type CustomMysqlProvider = {
-  provider: "mysql";
-  adapter: CreateMysqlAdapter;
-  driver: "custom";
-};
-
-type CustomMongoProvider = {
-  provider: "mongodb";
-  adapter: CreateMongoAdapter;
-  driver: "custom";
-};
-
-type CustomSqliteProvider = {
-  provider: "sqlite";
-  adapter: CreateSqliteAdapter;
-  driver: "custom";
-};
+// Use the generic to define custom provider types
+type CustomPostgresProvider = CustomProvider<
+  "postgresql",
+  CreatePostgresAdapter
+>;
+type CustomMysqlProvider = CustomProvider<"mysql", CreateMysqlAdapter>;
+type CustomMongoProvider = CustomProvider<"mongodb", CreateMongoAdapter>;
+type CustomSqliteProvider = CustomProvider<"sqlite", CreateSqliteAdapter>;
 
 type PgProvider = {
   provider: "postgresql";
