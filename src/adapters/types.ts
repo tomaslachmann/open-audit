@@ -51,7 +51,7 @@ type MysqlProvider = {
 type FileProvider = {
   provider: "file";
   path?: string;
-} & BaseConfig;
+} & Omit<BaseConfig, "driver">;
 
 type SqliteProvider = {
   provider: "sqlite";

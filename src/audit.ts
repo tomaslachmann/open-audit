@@ -5,6 +5,7 @@ import { FileAdapter } from "./adapters/file";
 import { MySQL2Adapter } from "./adapters/mysql2";
 import { BetterSqlite3Adapter } from "./adapters/sqlite";
 import { MongoDBAdapter } from "./adapters/mongodb";
+import { AuditEvent } from "./adapters/types";
 
 let adapter: BaseAdapter | null = null;
 
@@ -55,5 +56,12 @@ export const OpenAudit = {
     if (adapter !== null) {
       await adapter.init();
     }
+  },
+
+  async log(event: AuditEvent) {
+    if (adapter === null) {
+      throw new Error(`[OpenAudit] Unsupported provider`);
+    }
+    return await adapter.logEvent(event);
   },
 };

@@ -5,4 +5,4 @@ examples
 tsup.config.ts
 .gitignore
 .git
-
+.env
