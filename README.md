@@ -22,10 +22,10 @@
 ## 📦 Install
 
 ```bash
-npm install open-audit
+npm install @arcari/open-audit
 ```
 
-> You'll also need to install the database driver for your chosen adapter:
+> You'll also need to install the database driver for your chosen adapter, or pass your custom, check the examples:
 
 ```bash
 # For PostgreSQL
@@ -221,7 +221,13 @@ Pull requests are welcome! For major changes, open an issue first to discuss wha
 To get started locally:
 
 ```bash
-npm i @arcari/open-audit
+git clone https://github.com/yourname/open-audit.git
+
+cd open-audit
+
+npm install
+
+npm run dev
 ```
 
 ---
