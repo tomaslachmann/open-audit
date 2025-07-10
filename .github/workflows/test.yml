@@ -65,9 +65,6 @@ jobs:
       - name: Build
         run: npm run build || true
 
-      - name: Run Unit Tests
-        run: npm run test:unit
-
-      - name: Run Integration Tests
-        run: npm run test:integration
-
+      - name: Run Tests
+        run: npm run test
+      
