@@ -1,55 +1,27 @@
 import type { Database } from "better-sqlite3";
-import { BaseAdapter } from "./base";
-import { AuditEvent } from "./types";
+import { CreateSqliteAdapter } from "./utils/createSqliteAdapter";
 
-export class SQLiteAdapter extends BaseAdapter {
+export class BetterSqlite3Adapter extends CreateSqliteAdapter {
   constructor(
     private db: Database,
     debug = false,
   ) {
-    super(debug);
-    this.db = db;
-  }
-
-  async init() {
-    try {
-      this.logger.info(`Connecting to SQLite...`);
-      this.db.pragma("journal_mode = WAL");
-      this.db.exec(`
-        CREATE TABLE IF NOT EXISTS audit_events (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          timestamp TEXT DEFAULT CURRENT_TIMESTAMP,
-          actor_id TEXT,
-          action TEXT NOT NULL,
-          entity TEXT,
-          entity_id TEXT,
-          metadata TEXT
-        );
-      `);
-      this.logger.success(
-        "Connected to SQLite and ensured audit_events table.",
-      );
-    } catch (err) {
-      this.logger.error("Failed to initialize SQLite adapter.");
-      console.error(err);
-      throw err;
-    }
-  }
-
-  async logEvent(event: AuditEvent) {
-    const stmt = this.db.prepare(`
-      INSERT INTO audit_events (actor_id, action, entity, entity_id, metadata)
-      VALUES (?, ?, ?, ?, ?)
-    `);
-    const info = stmt.run(
-      event.actorId,
-      event.action,
-      event.entity,
-      event.entityId,
-      JSON.stringify(event.metadata || {}),
+    super(
+      async () => {
+        // connect is basically noop for better-sqlite3 since it's sync,
+        // but we'll set PRAGMA here to enable WAL mode:
+        db.pragma("journal_mode = WAL");
+      },
+      async (sql: string, params?: any[]) => {
+        if (sql.trim().toUpperCase().startsWith("INSERT")) {
+          const stmt = db.prepare(sql);
+          return stmt.run(params);
+        } else {
+          // For other statements like CREATE TABLE
+          return db.exec(sql);
+        }
+      },
+      debug,
     );
-
-    this.log("Logged event:", info);
-    return info;
   }
 }

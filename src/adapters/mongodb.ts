@@ -1,10 +1,10 @@
 import type { MongoClient, Db, Collection } from "mongodb";
-import { BaseAdapter } from "./base";
 import { AuditEvent } from "./types";
+import { CreateMongoAdapter } from "./utils/createMongoAdapter";
 
-export class MongoDBAdapter extends BaseAdapter {
-  private collection!: Collection;
+export class MongoDBAdapter extends CreateMongoAdapter {
   private db!: Db;
+  private collection!: Collection;
 
   constructor(
     private client: MongoClient,
@@ -12,33 +12,53 @@ export class MongoDBAdapter extends BaseAdapter {
     private collectionName: string = "audit_events",
     debug = false,
   ) {
-    super(debug);
-    this.client = client;
-  }
+    super(
+      async () => {
+        await client.connect();
 
-  async init() {
-    try {
-      this.logger.info("Connecting to MongoDB...");
-      await this.client.connect();
-      this.db = this.client.db(this.dbName);
-      this.collection = this.db.collection(this.collectionName);
-      this.logger.success(
-        `Connected to MongoDB and using ${this.dbName}.${this.collectionName}`,
-      );
-    } catch (err) {
-      this.logger.error("Failed to initialize MongoDB adapter.");
-      console.error(err);
-      throw err;
-    }
-  }
+        // Get DB reference
+        const db = client.db(dbName);
 
-  async logEvent(event: AuditEvent) {
-    const result = await this.collection.insertOne({
-      ...event,
-      timestamp: new Date(),
-    });
+        // Check if collection exists
+        const collections = await db
+          .listCollections({ name: collectionName })
+          .toArray();
 
-    this.log("Logged event:", result);
-    return result;
+        if (collections.length === 0) {
+          // Explicitly create collection with optional validation rules (optional)
+          await db.createCollection(collectionName, {
+            validator: {
+              $jsonSchema: {
+                bsonType: "object",
+                required: ["action"],
+                properties: {
+                  actorId: { bsonType: ["string", "null"] },
+                  action: { bsonType: "string" },
+                  entity: { bsonType: ["string", "null"] },
+                  entityId: { bsonType: ["string", "null"] },
+                  metadata: { bsonType: ["object", "null"] },
+                  timestamp: { bsonType: "date" },
+                },
+              },
+            },
+          });
+        }
+
+        // Save references for insert
+        this.db = db;
+        this.collection = db.collection(collectionName);
+
+        // Create indexes (e.g., on timestamp for faster queries)
+        await this.collection.createIndex({ timestamp: 1 });
+      },
+      async (event: AuditEvent) => {
+        if (!this.collection) {
+          this.db = client.db(dbName);
+          this.collection = this.db.collection(collectionName);
+        }
+        return this.collection.insertOne(event);
+      },
+      debug,
+    );
   }
 }
