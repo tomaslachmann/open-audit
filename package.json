@@ -25,8 +25,8 @@
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn src/index.ts",
     "test": "vitest --disable-console-intercept",
-    "test:unit": "vitest run --include test/**/*.test.ts --exclude test/**/*.integration.test.ts",
-    "test:integration": "vitest run --include test/**/*.integration.test.ts"
+    "test:unit": "vitest run 'test/**/*.test.ts' '!test/**/*.integration.test.ts'",
+    "test:integration": "vitest run 'test/**/*.integration.test.ts'"
   },
   "dependencies": {
     "chalk": "^5.4.1"
